@@ -1,0 +1,24 @@
+{
+  "type": "object",
+  "properties": {
+    "max_results": {
+      "type": "string",
+      "default": "10"
+    },
+    "query": {
+      "type": "string"
+    },
+    "labels": {
+      "type": "array",
+      "default": []
+    },
+    "include_spam_trash": {
+      "type": "boolean",
+      "default": false
+    }
+  },
+  "required": [
+    "query"
+  ],
+  "additionalProperties": false
+}

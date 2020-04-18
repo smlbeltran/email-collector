@@ -1,0 +1,6 @@
+vendor/
+data/
+config.json
+credentials.json
+outlook.json
+.idea/
