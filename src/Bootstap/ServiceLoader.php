@@ -16,10 +16,6 @@ class ServiceLoader
      */
     public function load(ContainerInterface $container)
     {
-        $container->set('Google.Service', function(){
-            return new GoogleService();
-        });
-
         $container->set('Validator', function(){
             return new JsonSchemaValidator();
         });

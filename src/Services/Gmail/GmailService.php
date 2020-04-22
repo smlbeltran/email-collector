@@ -2,9 +2,7 @@
 
 namespace EmailCollector\Service\Gmail;
 
-use Psr\Http\Message\ResponseInterface as Response;
-use Psr\Http\Message\ServerRequestInterface as Request;
-use EmailCollector\Services\BaseController;
+use EmailCollector\Services\EmailCollectionService\EmailCollectionInterface;
 
 /**
  * Class GmailService
@@ -13,56 +11,57 @@ use EmailCollector\Services\BaseController;
  * This class is responsible for interacting with Gmail APIs to interact with
  * different CRUD operation across different messages we choose to work with
  */
-class GmailService extends BaseController
+class GmailService implements EmailCollectionInterface
 {
+    private $client;
+
+    public function __construct()
+    {
+        $this->client = new \Google_Client();
+
+    }
+
+    public function connect()
+    {
+        if (isset($_SESSION['access_token']) && $_SESSION['access_token']) {
+
+            return $this->client->setAccessToken($_SESSION['access_token']);
+        }
+
+        throw new \Exception('Google client not available');
+    }
 
     private function mapToGmailModel($payload)
     {
-        $gmail = (new Gmail())
+        return (new Gmail())
             ->withUserId('me')
-            ->withLabelIds($payload->labels ?? [])
+            ->withLabelIds($payload->labels)
             ->withMaxResults($payload->max_results)
-            ->withQuery($payload->query ?? '')
+            ->withEmail($payload->email)
             ->withIsBoolean($payload->include_spam_trash);
-
-        return $gmail;
     }
 
     /**
-     * we want to be able to connect to google client
-     * and fetch all emails we request through our query
-     * @param Request $request
-     * @param Response $response
-     * @return Response|void
+     *
+     * fetch all emails from Gmail
+     * @param $payload
+     * @return array
+     * @throws \Exception
      */
-    public function index(Request $request, Response $response)
+    public function collect($payload)
     {
-        /** @var \EmailCollector\Helpers\JsonSchemaValidator $validator */
-        $validator = $this->container->get('Validator');
-
-        $payload = $validator->validate($request, 'Gmail/index');
-
         $model = $this->mapToGmailModel($payload);
 
-        try {
-            /** @var \EmailCollector\Services\Google\GoogleService $client */
-            $client = $this->container->get('Google.Service');
+        $this->connect();
 
-            $client = $client->connect();
+        $mailService = new \Google_Service_Gmail($this->client);
 
-            $mailService = new \Google_Service_Gmail($client);
-
-            $mails = $mailService->users_messages->listUsersMessages($model->getUserId(), [
-                'q' => $model->getQuery(),
-                'maxResults' => (int)$model->getMaxResults(),
-                'labelIds' => $model->getLabelIds(),
-                'includeSpamTrash' => $model->isBoolean(),
-            ]);
-
-        } catch (\Exception $e) {
-            $redirect_uri = 'http://' . $_SERVER['HTTP_HOST'] . '/auth';
-            return $response->withHeader('Location', $redirect_uri);
-        }
+        $mails = $mailService->users_messages->listUsersMessages($model->getUserId(), [
+            'q' => $model->getEmail(),
+            'maxResults' => (int)$model->getMaxResults(),
+            'labelIds' => $model->getLabelIds(),
+            'includeSpamTrash' => $model->isBoolean(),
+        ]);
 
         $msgList = [];
         foreach ($mails as $k => $message) {
@@ -74,7 +73,6 @@ class GmailService extends BaseController
             ];
 
         }
-
-        return $this->json(['data' => $msgList], $response);
+        return $msgList;
     }
 }

@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace EmailCollector\Service\Gmail;
+namespace EmailCollector\Service\Outlook;
 
 
-class Gmail
+class Outlook
 {
     private $labelIds = [];
 
@@ -27,9 +27,9 @@ class Gmail
 
     /**
      * @param mixed $isBoolean
-     * @return Gmail
+     * @return Outlook
      */
-    public function withIsBoolean(bool $isBoolean): Gmail
+    public function withIsBoolean(bool $isBoolean): Outlook
     {
         $this->isBoolean = $isBoolean;
         return $this;
@@ -45,9 +45,9 @@ class Gmail
 
     /**
      * @param array $labelIds
-     * @return Gmail
+     * @return Outlook
      */
-    public function withLabelIds(array $labelIds): Gmail
+    public function withLabelIds(array $labelIds): Outlook
     {
         $this->labelIds = $labelIds;
         return $this;
@@ -63,9 +63,9 @@ class Gmail
 
     /**
      * @param mixed $maxResults
-     * @return Gmail
+     * @return Outlook
      */
-    public function withMaxResults(int $maxResults): Gmail
+    public function withMaxResults(int $maxResults): Outlook
     {
 
         $this->maxResults = $maxResults;
@@ -82,9 +82,9 @@ class Gmail
 
     /**
      * @param string $email
-     * @return Gmail
+     * @return Outlook
      */
-    public function withEmail(string $email): Gmail
+    public function withEmail(string $email): Outlook
     {
         $this->email = $email;
         return $this;
@@ -100,9 +100,9 @@ class Gmail
 
     /**
      * @param mixed $userId
-     * @return Gmail
+     * @return Outlook
      */
-    public function withUserId($userId): Gmail
+    public function withUserId($userId): Outlook
     {
         $this->userId = $userId;
         return $this;

@@ -1,12 +1,12 @@
 {
   "type": "object",
   "properties": {
+    "email": {
+      "type": "string"
+    },
     "max_results": {
       "type": "string",
       "default": "10"
-    },
-    "query": {
-      "type": "string"
     },
     "labels": {
       "type": "array",
@@ -18,7 +18,7 @@
     }
   },
   "required": [
-    "query"
+    "email"
   ],
   "additionalProperties": false
 }
