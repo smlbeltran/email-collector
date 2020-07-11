@@ -20,6 +20,8 @@ class UserService extends BaseController
 
         $user->createUser($payload);
 
+//        /** @var \EmailCollector\Bootstrap\ServiceLogger */
+//        $this->container->get("logger")->debug("this is working accordingly");
         return $response->withStatus(201);
     }
 }

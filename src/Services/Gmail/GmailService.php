@@ -8,8 +8,8 @@ use EmailCollector\Services\EmailCollectionService\EmailCollectionInterface;
  * Class GmailService
  * @package EmailCollector\Service\Gmail
  *
- * This class is responsible for interacting with Gmail APIs to interact with
- * different CRUD operation across different messages we choose to work with
+ * This class is responsible for the interaction with the Gmail Api to fetch all emails
+ * the user requests.
  */
 class GmailService implements EmailCollectionInterface
 {
@@ -25,7 +25,7 @@ class GmailService implements EmailCollectionInterface
     {
         if (isset($_SESSION['access_token']) && $_SESSION['access_token']) {
 
-            return $this->client->setAccessToken($_SESSION['access_token']);
+           return $this->client->setAccessToken($_SESSION['access_token']);
         }
 
         throw new \Exception('Google client not available');
@@ -37,7 +37,7 @@ class GmailService implements EmailCollectionInterface
             ->withUserId('me')
             ->withLabelIds($payload->labels)
             ->withMaxResults($payload->max_results)
-            ->withEmail($payload->email)
+            ->withEmail($payload->search)
             ->withIsBoolean($payload->include_spam_trash);
     }
 
@@ -57,7 +57,7 @@ class GmailService implements EmailCollectionInterface
         $mailService = new \Google_Service_Gmail($this->client);
 
         $mails = $mailService->users_messages->listUsersMessages($model->getUserId(), [
-            'q' => $model->getEmail(),
+            'q' => 'from:'. $model->getEmail(),
             'maxResults' => (int)$model->getMaxResults(),
             'labelIds' => $model->getLabelIds(),
             'includeSpamTrash' => $model->isBoolean(),
@@ -65,11 +65,12 @@ class GmailService implements EmailCollectionInterface
 
         $msgList = [];
         foreach ($mails as $k => $message) {
-            $msg = $mailService->users_messages->get('me', $message->id);
+            $msg = $mailService->users_messages->get('me', $message->id, ['format'=>'metadata','metadataHeaders'=> ['From'] ]);
 
-            $msgList[$msg->getId()] = [
+            $msgList[] = [
                 'title' => $msg->getSnippet(),
-                'labels' => $msg->getLabelIds()
+                'labels' => $msg->getLabelIds(),
+                'from' => $msg->getPayload()->getHeaders()[0]->getValue(),
             ];
 
         }

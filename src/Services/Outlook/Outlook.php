@@ -4,7 +4,11 @@ declare(strict_types=1);
 
 namespace EmailCollector\Service\Outlook;
 
-
+/**
+ * Class Outlook
+ * @package EmailCollector\Service\Outlook
+ * Initializer Setter & Getter for Outlook Service
+ */
 class Outlook
 {
     private $labelIds = [];

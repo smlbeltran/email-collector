@@ -8,7 +8,12 @@ use EmailCollector\Services\Outlook\OutlookService;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 
-
+/**
+ * Class EmailCollections
+ * @package EmailCollector\Services\EmailCollectionService
+ * This class is responsible for gathering emails from Gmail & Outlook and return
+ * the results to the user as a batch.
+ */
 class EmailCollections extends BaseController
 {
     public function index(Request $request, Response $response)

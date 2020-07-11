@@ -8,6 +8,11 @@ use GuzzleHttp\Psr7\Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Server\RequestHandlerInterface as RequestHandler;
 
+/**
+ * Class MiddlewareAuth
+ * @package EmailCollector\Middleware
+ * Authenticates the user before making any further request to the application
+ */
 class MiddlewareAuth
 {
     // this is to verify the JWT token before moving the user to the endpoints
