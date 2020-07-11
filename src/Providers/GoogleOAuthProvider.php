@@ -8,13 +8,17 @@ use Noodlehaus\Config;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use GuzzleHttp\Psr7\Response;
 
+/**
+ * Class GoogleOAuthProvider
+ * @package EmailCollector\Providers
+ */
 class GoogleOAuthProvider implements OAuthConnectInterface
 {
     public function authenticate(Request $request, Response $response)
     {
         if (!isset($_SESSION['access_token'])) {
 
-            $config = Config::load(realpath('credentials.json'));
+            $config = Config::load(realpath('google_credentials.json'));
 
             $clientId = $config['web.client_id'];
             $clientSecret = $config['web.client_secret'];
@@ -56,6 +60,17 @@ class GoogleOAuthProvider implements OAuthConnectInterface
                 ]);
 
                 $refreshToken = $token->getRefreshToken();
+
+                if ($refreshToken != null) {
+
+                    $file = json_decode(file_get_contents('./credentials.json'));
+
+                    $file->web->refresh_token = $refreshToken;
+
+                    file_put_contents('./google_credentials.json', json_encode($file));
+                } else {
+                    $refreshToken = $config['web.refresh_token'];
+                }
 
                 $grant = new RefreshToken();
                 $token = $provider->getAccessToken($grant, ['refresh_token' => $refreshToken]);

@@ -5,16 +5,16 @@ namespace EmailCollector;
 use DI\Container;
 use EmailCollector\Bootstrap\ConfigurationLoader;
 use EmailCollector\Bootstrap\ServiceDatabase;
+use EmailCollector\Bootstrap\ServiceLogger;
 use EmailCollector\Bootstrap\ServiceRouter;
 use EmailCollector\Bootstrap\ServiceLoader;
 use Psr\Container\ContainerInterface;
 use Slim\Factory\AppFactory;
 
-ini_set('xdebug.overload_var_dump', 0);
-
 class ApplicationFactory
 {
-    public function make(){
+    public function make()
+    {
 
         // we set the DI container
         $container = new Container();
@@ -30,6 +30,7 @@ class ApplicationFactory
         $this->loadServices($container);
         $this->loadConfiguration($container);
         $this->loadDatabases($container);
+//        $this->loadLogger($container);
 
         $app->addErrorMiddleware(true, false, false);
         $app->run();
@@ -66,9 +67,14 @@ class ApplicationFactory
         return $services->load($container);
     }
 
-    private function loadConfiguration($container){
+    private function loadConfiguration($container)
+    {
         $service = new ConfigurationLoader();
         return $service->load($container);
-}
+    }
 
+//    private function loadLogger($container){
+//        $service = new ServiceLogger();
+//        return $service->load($container);
+//    }
 }

@@ -4,7 +4,11 @@ declare(strict_types=1);
 
 namespace EmailCollector\Service\Gmail;
 
-
+/**
+ * Class Gmail
+ * @package EmailCollector\Service\Gmail
+ * Initializer Setter & Getter for Gmail Service
+ */
 class Gmail
 {
     private $labelIds = [];

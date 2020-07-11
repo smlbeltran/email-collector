@@ -23,7 +23,8 @@ class ServiceRouter
     {
         $app->group('', function(RouteCollectorProxy $group){
 
-        })->add(new MiddlewareAuth());
+        });
+//            ->add(new MiddlewareAuth());
 
         $app->get('/emails', EmailCollections::class . ':index')->add(new MiddlewareRedirect());
         $app->get('/authenticate/google', Authentication::class . ':googleAuth');

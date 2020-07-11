@@ -7,7 +7,12 @@ use EmailCollector\Services\EmailCollectionService\EmailCollectionInterface;
 use Microsoft\Graph\Graph;
 use Microsoft\Graph\Model;
 
-
+/**
+ * Class OutlookService
+ * @package EmailCollector\Services\Outlook
+ * This class is responsible for the interaction with the Outlook Api (Microsoft Graph) to fetch all emails
+ * the user requests.
+ */
 class OutlookService implements EmailCollectionInterface
 {
     private $count;
@@ -17,7 +22,7 @@ class OutlookService implements EmailCollectionInterface
     private function mapToOutlookModel($payload)
     {
         return (new Outlook())
-            ->withEmail($payload->email);
+            ->withEmail($payload->search);
     }
 
     public function collect($payload)
@@ -28,7 +33,7 @@ class OutlookService implements EmailCollectionInterface
 
         $param = $this->mapToOutlookModel($payload);
 
-        $emailResponse = $graph->createRequest("GET", "/me/messages?\$search={$param->getEmail()}")
+        $emailResponse = $graph->createRequest("GET", "/me/messages?\$search=" . "\"from:" . $param->getEmail() .'"' )
             ->execute();
 
         while (true) {

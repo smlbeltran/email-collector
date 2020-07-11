@@ -19,10 +19,10 @@ class JsonSchemaValidator
             //post
             $data = json_decode($data->getBody()->getContents());
         }
-
+//        die(var_dump(APP_PATH/..//));
         $validator->validate(
             $data,
-            (object)['$ref' => 'file://' . APP_PATH . '/src/JsonSchemas/' . $schema . '.json'],
+            (object)['$ref' => 'file://' . APP_PATH . '/../src/JsonSchemas/' . $schema . '.json'],
             Constraint::CHECK_MODE_APPLY_DEFAULTS
         );
 

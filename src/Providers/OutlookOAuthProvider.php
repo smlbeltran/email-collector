@@ -4,9 +4,14 @@
 namespace EmailCollector\Providers;
 
 use GuzzleHttp\Psr7\Response;
+use League\OAuth2\Client\Grant\RefreshToken;
 use Noodlehaus\Config;
 use Psr\Http\Message\ServerRequestInterface as Request;
 
+/**
+ * Class OutlookOAuthProvider
+ * @package EmailCollector\Providers
+ */
 class OutlookOAuthProvider implements OAuthConnectInterface
 {
     const AUTHORITY_URL = 'https://login.microsoftonline.com/consumers';
@@ -19,7 +24,7 @@ class OutlookOAuthProvider implements OAuthConnectInterface
 
         if (!isset($_SESSION['access_token_outlook'])) {
 
-            $config = Config::load(realpath('outlook.json'));
+            $config = Config::load(realpath('outlook_credentials.json'));
 
             $clientId = $config['client_id'];
             $clientSecret = $config['client_secret'];
@@ -52,13 +57,30 @@ class OutlookOAuthProvider implements OAuthConnectInterface
                 }
 
                 try {
-                    //Note:: if token expires catch exception and set refresh token into request. (refresh_token)
-                    // Get an access token using the authorization code grant
+
                     $accessToken = $provider->getAccessToken('authorization_code', [
                         'code' => $_GET['code'],
                     ]);
 
-                    $_SESSION['access_token_outlook'] = $accessToken->getToken();
+
+                    $refreshToken = $accessToken->getRefreshToken();
+
+                    if ($refreshToken != null) {
+
+                        $file = json_decode(file_get_contents('./outlook_credentials.json'));
+
+                        $file->refresh_token = $refreshToken;
+
+                        file_put_contents('./outlook.json', json_encode($file));
+                    } else {
+                        $refreshToken = $config['refresh_token'];
+                    }
+
+                    $grant = new RefreshToken();
+                    $token = $provider->getAccessToken($grant, ['refresh_token' => $refreshToken]);
+
+
+                    $_SESSION['access_token_outlook'] = $token->getToken();
 
                 } catch (League\OAuth2\Client\Provider\Exception\IdentityProviderException $e) {
                     throw new \Exception('Something went wrong, couldn\'t get tokens: ' . $e->getMessage());

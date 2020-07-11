@@ -1,9 +1,0 @@
-[2020-04-21T21:33:39.301588+00:00] GoogleOAuth.WARNING: https://accounts.google.com/o/oauth2/v2/auth?scope=openid%20email%20profile%20https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fgmail.readonly&prompt=consent&access_type=offline&state=782b436879a3397dbc2cc19be1a1cbca&response_type=code&redirect_uri=http%3A%2F%2Flocalhost%3A8080%2Femails&client_id=384727379573-afmbourtovkcango3rk1pa32h6nsv0pc.apps.googleusercontent.com [] []
-
-
-[2020-04-21T21:33:48.608706+00:00] GoogleOAuth.WARNING: {"oauth2state":"782b436879a3397dbc2cc19be1a1cbca","access_token":"ya29.a0Ae4lvC2LuCZMjlz9b2VNux-C4AhYpBAI48IhcZUbf4ukjkPripxsiNBggueFqboaibhMfLZN8E-yR9Wy9X68BJUw1dLPCYnwVFam1GEE2fttQYdNoVd0BbCDnLwrhFmsl838dEP0SUw61vcCEMal7nwl5O4xXPdey38"} [] []
-[2020-04-21T21:33:48.609172+00:00] GoogleOAuth.WARNING: {"state":"782b436879a3397dbc2cc19be1a1cbca","code":"4\/ywGYkVZbUq5oIH_jypOjzJdly4KQ4V8ElOOcH3herH_-CrMrZKcrVy2WsFxDTrsyddethpzAKO5281LawDfLLtc","scope":"email profile https:\/\/www.googleapis.com\/auth\/gmail.readonly openid https:\/\/www.googleapis.com\/auth\/userinfo.email https:\/\/www.googleapis.com\/auth\/userinfo.profile","authuser":"0","prompt":"consent"} [] []
-
-
-[2020-04-21T21:33:48.619789+00:00] OutlookOAuth.WARNING: {"oauth2state":"782b436879a3397dbc2cc19be1a1cbca","access_token":"ya29.a0Ae4lvC2LuCZMjlz9b2VNux-C4AhYpBAI48IhcZUbf4ukjkPripxsiNBggueFqboaibhMfLZN8E-yR9Wy9X68BJUw1dLPCYnwVFam1GEE2fttQYdNoVd0BbCDnLwrhFmsl838dEP0SUw61vcCEMal7nwl5O4xXPdey38","state":"1b20e12cf42e743657fb2f52f157c63a"} [] []
-[2020-04-21T21:33:48.620316+00:00] OutlookOAuth.WARNING: {"scope":"email profile https:\/\/www.googleapis.com\/auth\/gmail.readonly openid https:\/\/www.googleapis.com\/auth\/userinfo.email https:\/\/www.googleapis.com\/auth\/userinfo.profile","authuser":"0","prompt":"consent"} [] []
