@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace EmailCollector\Helpers;
@@ -19,7 +20,7 @@ class JsonSchemaValidator
             //post
             $data = json_decode($data->getBody()->getContents());
         }
-//        die(var_dump(APP_PATH/..//));
+
         $validator->validate(
             $data,
             (object)['$ref' => 'file://' . APP_PATH . '/../src/JsonSchemas/' . $schema . '.json'],

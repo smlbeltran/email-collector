@@ -24,14 +24,20 @@ class EmailCollections extends BaseController
 
         $payload = $validator->validate($request, 'Message/index');
 
+        $emailModel = (new Email())->withUserId('me')
+            ->withLabelIds($payload->labels)
+            ->withMaxResults($payload->max_results)
+            ->withEmail($payload->search)
+            ->withIsBoolean($payload->include_spam_trash);;
+
         $emailServices = [
-            new GmailService(),
-            new OutlookService(),
+            new GmailService($emailModel),
+            new OutlookService($emailModel),
         ];
 
         foreach ($emailServices as $service) {
             if ($service instanceof EmailCollectionInterface) {
-                $data[get_class($service)] = $service->collect($payload);
+                $data[get_class($service)] = $service->getEmails();
             }
         }
 
