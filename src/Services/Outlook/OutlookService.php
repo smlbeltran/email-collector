@@ -15,71 +15,52 @@ use Microsoft\Graph\Model;
  */
 class OutlookService implements EmailCollectionInterface
 {
-    private $count;
+    private $model;
 
-    private $pagination;
+    private $microsoftGraphApi;
 
-    private function mapToOutlookModel($payload)
+    private $emails = [];
+
+    public function __construct($model)
     {
-        return (new Outlook())
-            ->withEmail($payload->search);
+        $this->model = $model;
+        $this->microsoftGraphApi = new Graph();
+        $this->microsoftGraphApi->setAccessToken($_SESSION['access_token_outlook']);
     }
 
-    public function collect($payload)
+    public function getEmails($nextPageLink = null)
     {
-        $emails = [];
-        $graph = new Graph();
-        $graph->setAccessToken($_SESSION['access_token_outlook']);
+        $messages = null;
+        $response = null;
 
-        $param = $this->mapToOutlookModel($payload);
+        if ($nextPageLink == null) {
+            //receives 25 items per page
+            $response = $this->microsoftGraphApi->createRequest("GET", "/me/messages?\$search=" . "\"from:" . $this->model->getEmail() . '"')
+                ->execute();
 
-        $emailResponse = $graph->createRequest("GET", "/me/messages?\$search=" . "\"from:" . $param->getEmail() .'"' )
-            ->execute();
-
-        while (true) {
-
-            $mailList = $emailResponse->getResponseAsObject(Model\Message::class);
-
-            foreach ($mailList as $email) {
-                $emails[$email->getSender()->getEmailAddress()->getAddress()][] = $email->getReceivedDateTime()->format('c') ?? null;
-                $emails[$email->getSender()->getEmailAddress()->getAddress()][] = $email->getSubject();
-                $emails[$email->getSender()->getEmailAddress()->getAddress()][] = $email->getImportance()->value();
-                $emails[$email->getSender()->getEmailAddress()->getAddress()][] = $email->getWebLink();
-            }
-
-            $data = $emails;
-
-            $this->pagination = $emailResponse->getNextLink();
-
-            if ($this->pagination == null) {
-                return $data;
-            }
-
-            $this->count = 1;
-
-            while ($this->count > 0) {
-                $emailResponse = $graph->createRequest("GET", $this->pagination)
-                    ->execute();
-
-                $mailList = $emailResponse->getResponseAsObject(Model\Message::class);
-
-                foreach ($mailList as $email) {
-                    $emails[$email->getSender()->getEmailAddress()->getAddress()][] = $email->getReceivedDateTime()->format('c') ?? null;
-                    $emails[$email->getSender()->getEmailAddress()->getAddress()][] = $email->getSubject();
-                    $emails[$email->getSender()->getEmailAddress()->getAddress()][] = $email->getImportance()->value();
-                    $emails[$email->getSender()->getEmailAddress()->getAddress()][] = $email->getWebLink();
-                }
-
-                $data = $emails;
-
-                $this->pagination = $emailResponse->getNextLink();
-
-                if ($this->pagination == null) {
-                    return $data;
-                }
-
-                $this->count++;
-            }
+        } else {
+            $response = $this->microsoftGraphApi->createRequest("GET", $nextPageLink)
+                ->execute();
         }
+
+        $messages = $response->getResponseAsObject(Model\Message::class);
+
+        foreach ($messages as $message) {
+
+            $this->emails[] = [
+                'from' => $message->getSender()->getEmailAddress()->getAddress(),
+                'date' => $message->getReceivedDateTime()->format('c') ?? null,
+                'title' => $message->getSubject(),
+                'label' => $message->getImportance()->value(),
+                'link' => $message->getWebLink(),
+            ];
+        }
+
+        if ($response->getNextLink() != null) {
+            $this->getEmails($response->getNextLink());
+        }
+
+        return $this->emails;
     }
+
 }

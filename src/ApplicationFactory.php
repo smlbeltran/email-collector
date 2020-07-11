@@ -30,7 +30,6 @@ class ApplicationFactory
         $this->loadServices($container);
         $this->loadConfiguration($container);
         $this->loadDatabases($container);
-//        $this->loadLogger($container);
 
         $app->addErrorMiddleware(true, false, false);
         $app->run();
@@ -72,9 +71,4 @@ class ApplicationFactory
         $service = new ConfigurationLoader();
         return $service->load($container);
     }
-
-//    private function loadLogger($container){
-//        $service = new ServiceLogger();
-//        return $service->load($container);
-//    }
 }

@@ -21,15 +21,10 @@ class ServiceRouter
      */
     public function load(App $app)
     {
-        $app->group('', function(RouteCollectorProxy $group){
-
-        });
-//            ->add(new MiddlewareAuth());
-
         $app->get('/emails', EmailCollections::class . ':index')->add(new MiddlewareRedirect());
         $app->get('/authenticate/google', Authentication::class . ':googleAuth');
         $app->get('/authenticate/outlook', Authentication::class . ':outlookAuth');
-        $app->post('/create', UserService::class . ':create');
-        $app->post('/jwt', ApiKey::class . ':create');
+//        $app->post('/create', UserService::class . ':create');
+//        $app->post('/jwt', ApiKey::class . ':create');
     }
 }

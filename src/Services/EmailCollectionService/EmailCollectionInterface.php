@@ -4,5 +4,5 @@ namespace EmailCollector\Services\EmailCollectionService;
 
 interface EmailCollectionInterface
 {
-    public function collect($payload);
+    public function getEmails($nextPageLink);
 }
