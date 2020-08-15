@@ -41,6 +41,7 @@ class EmailCollections extends BaseController
             }
         }
 
+
         return $this->json(['data' => $data], $response);
     }
 }

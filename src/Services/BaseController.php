@@ -1,8 +1,10 @@
 <?php
 
 namespace EmailCollector\Services;
+
 use GuzzleHttp\Psr7\Response;
 use Psr\Container\ContainerInterface;
+
 use function GuzzleHttp\Psr7\stream_for;
 
 
@@ -37,16 +39,14 @@ abstract class BaseController
      */
     protected function json($json, Response $response, $status = 200)
     {
-
         $stream = stream_for(is_string($json) ? $json : json_encode($json));
 
-        $response = $response->withBody($stream);
+        $response = $response->withBody($stream)
+            ->withHeader('Content-Type', 'application/json;charset=utf-8')
+            ->withStatus($status);
 
-        $responseWithJson = $response->withHeader('Content-Type', 'application/json;charset=utf-8');
 
-        $responseWithStatusCode = $responseWithJson->withStatus($status);
-
-        return $responseWithStatusCode;
+        return $response;
     }
 
 }

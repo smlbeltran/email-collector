@@ -37,6 +37,7 @@ class GmailService implements EmailCollectionInterface
     {
         $googleServiceGmail = new \Google_Service_Gmail($this->client);
 
+
         $mails = $googleServiceGmail->users_messages->listUsersMessages($this->model->getUserId(), [
             'q' => 'from:'. $this->model->getEmail(),
             'maxResults' => (int)$this->model->getMaxResults(),
