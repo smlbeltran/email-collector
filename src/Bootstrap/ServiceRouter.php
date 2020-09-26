@@ -1,16 +1,16 @@
 <?php
 
 namespace EmailCollector\Bootstrap;
-
-use EmailCollector\Middleware\MiddlewareAuth;
-
+// use EmailCollector\Middleware\MiddlewareAuth;
+use Slim\App;
 use EmailCollector\Middleware\MiddlewareRedirect;
 use EmailCollector\Services\ApiKey;
 use EmailCollector\Services\Authentication;
+use EmailCollector\Services\Health\Health;
 use EmailCollector\Services\EmailCollectionService\EmailCollections;
 use EmailCollector\Services\User\UserService;
-use Slim\App;
-use Slim\Routing\RouteCollectorProxy;
+
+
 
 class ServiceRouter
 {
@@ -21,10 +21,12 @@ class ServiceRouter
      */
     public function load(App $app)
     {
-        $app->get('/emails', EmailCollections::class . ':index')->add(new MiddlewareRedirect());
+        $app->get('/health', Health::class . ':getHealth');
+        $app->get('/emails', EmailCollections::class . ':index')
+            ->add(new MiddlewareRedirect());
         $app->get('/authenticate/google', Authentication::class . ':googleAuth');
         $app->get('/authenticate/outlook', Authentication::class . ':outlookAuth');
-//        $app->post('/create', UserService::class . ':create');
-//        $app->post('/jwt', ApiKey::class . ':create');
+        $app->post('/create', UserService::class . ':create');
+        $app->post('/jwt', ApiKey::class . ':create');
     }
 }

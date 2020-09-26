@@ -2,7 +2,7 @@
 
 namespace EmailCollector\Services\EmailCollectionService;
 
-use EmailCollector\Service\Gmail\GmailService;
+use EmailCollector\Services\Gmail\GmailService;
 use EmailCollector\Services\BaseController;
 use EmailCollector\Services\Outlook\OutlookService;
 use Psr\Http\Message\ResponseInterface as Response;

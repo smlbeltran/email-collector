@@ -1,6 +1,6 @@
 <?php
 
-namespace EmailCollector\Service\Gmail;
+namespace EmailCollector\Services\Gmail;
 
 use EmailCollector\Services\EmailCollectionService\EmailCollectionInterface;
 
@@ -22,7 +22,7 @@ class GmailService implements EmailCollectionInterface
             $this->client = new \Google_Client();
             $this->client->setAccessToken($_SESSION['access_token']);
             $this->model = $model;
-        }else{
+        } else {
             throw new \Exception('Google client not available');
         }
     }
@@ -39,22 +39,21 @@ class GmailService implements EmailCollectionInterface
 
 
         $mails = $googleServiceGmail->users_messages->listUsersMessages($this->model->getUserId(), [
-            'q' => 'from:'. $this->model->getEmail(),
-            'maxResults' => (int)$this->model->getMaxResults(),
+            'q' => 'from:' . $this->model->getEmail(),
+            'maxResults' => (int) $this->model->getMaxResults(),
             'labelIds' => $this->model->getLabelIds(),
             'includeSpamTrash' => $this->model->isBoolean(),
         ]);
 
         $msgList = [];
         foreach ($mails as $k => $message) {
-            $msg = $googleServiceGmail->users_messages->get('me', $message->id, ['format'=>'metadata','metadataHeaders'=> ['From'] ]);
+            $msg = $googleServiceGmail->users_messages->get('me', $message->id, ['format' => 'metadata', 'metadataHeaders' => ['From']]);
 
             $msgList[] = [
                 'title' => $msg->getSnippet(),
                 'labels' => $msg->getLabelIds(),
                 'from' => $msg->getPayload()->getHeaders()[0]->getValue(),
             ];
-
         }
         return $msgList;
     }

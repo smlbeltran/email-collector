@@ -15,7 +15,6 @@ class ApplicationFactory
 {
     public function make()
     {
-
         // we set the DI container
         $container = new Container();
 

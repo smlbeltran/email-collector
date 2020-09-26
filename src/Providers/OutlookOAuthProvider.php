@@ -18,7 +18,7 @@ class OutlookOAuthProvider implements OAuthConnectInterface
     const AUTHORIZE_ENDPOINT = '/oauth2/v2.0/authorize';
     const TOKEN_ENDPOINT = '/oauth2/v2.0/token';
     const SCOPES = 'openid offline_access User.Read Mail.Read';
-
+    private const CREDENTIALS_PATH = __DIR__ . '/../../outlook.json';
     /**
      * @var object
      */
@@ -31,7 +31,7 @@ class OutlookOAuthProvider implements OAuthConnectInterface
 
     public function __construct()
     {
-        $this->conf = Config::load(realpath('outlook.json.json'));
+        $this->conf = Config::load(realpath(self::CREDENTIALS_PATH));
 
         $clientId = $this->conf['client_id'];
         $clientSecret = $this->conf['client_secret'];
@@ -100,11 +100,11 @@ class OutlookOAuthProvider implements OAuthConnectInterface
             $refreshToken = $accessToken->getRefreshToken();
 
             if ($refreshToken != null) {
-                $file = json_decode(file_get_contents('./outlook.json'), true);
+                $file = json_decode(file_get_contents(self::CREDENTIALS_PATH), true);
 
                 $file['refresh_token'] = $refreshToken;
 
-                file_put_contents('./outlook.json', json_encode($file));
+                file_put_contents(self::CREDENTIALS_PATH, json_encode($file));
             } else {
                 $refreshToken = $this->conf['refresh_token'];
             }

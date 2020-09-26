@@ -24,7 +24,7 @@
   },
   "autoload": {
     "psr-4": {
-      "EmailCollector\\": "src/"
+      "EmailCollector\\": "src"
     }
   },
   "require-dev": {

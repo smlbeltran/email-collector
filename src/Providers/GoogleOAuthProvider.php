@@ -14,6 +14,7 @@ use GuzzleHttp\Psr7\Response;
  */
 class GoogleOAuthProvider implements OAuthConnectInterface
 {
+    private const CREDENTIALS_PATH = __DIR__ . '/../../credentials.json';
     /**
      * @var $client object
      */
@@ -26,7 +27,7 @@ class GoogleOAuthProvider implements OAuthConnectInterface
 
     public function __construct()
     {
-        $this->conf = Config::load(realpath('credentials.json'));
+        $this->conf = Config::load(self::CREDENTIALS_PATH);
 
         $this->client = new Google(
             [
@@ -97,11 +98,11 @@ class GoogleOAuthProvider implements OAuthConnectInterface
         $refreshToken = $token->getRefreshToken();
 
         if ($refreshToken != null) {
-            $file = json_decode(file_get_contents('./credentials.json'), true);
+            $file = json_decode(file_get_contents(slef::CREDENTIALS_PATH), true);
 
             $file['web']["refresh_token"] = $refreshToken;
 
-            file_put_contents('./credentials.json', json_encode($file));
+            file_put_contents(self::CREDENTIALS_PATH, json_encode($file));
         } else {
             $refreshToken = $this->conf['web.refresh_token'];
         }

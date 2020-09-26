@@ -13,6 +13,9 @@ use GuzzleHttp\Psr7\Response;
 
 class MiddlewareRedirect
 {
+
+    private const CREDENTIALS_PATH = __DIR__ . '/../../outlook.json';
+
     public function __invoke(Request $request, RequestHandler $handler): Response
     {
         /**
@@ -41,7 +44,7 @@ class MiddlewareRedirect
             }
         }
 
-        $conf = Config::load(realpath('outlook.json'));
+        $conf = Config::load(self::CREDENTIALS_PATH);
 
         try {
             $guzzle->request(
@@ -57,7 +60,7 @@ class MiddlewareRedirect
                         'scope' => 'openid offline_access User.Read Mail.Read',
                         'refresh_token' => $conf['refresh_token'],
                         'client_secret' => $conf['client_secret'],
-                        ]
+                    ]
                 ]
             );
         } catch (ClientException $e) {

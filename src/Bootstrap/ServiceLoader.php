@@ -3,7 +3,6 @@
 namespace EmailCollector\Bootstrap;
 
 use EmailCollector\Helpers\JsonSchemaValidator;
-use EmailCollector\Services\Google\GoogleService;
 use EmailCollector\Services\User\UserDatabaseInterface;
 use Psr\Container\ContainerInterface;
 
@@ -16,13 +15,12 @@ class ServiceLoader
      */
     public function load(ContainerInterface $container)
     {
-        $container->set('Validator', function(){
+        $container->set('Validator', function () {
             return new JsonSchemaValidator();
         });
 
-        $container->set('UserDatabaseInterface', function() use ($container)
-        {
-           return new UserDatabaseInterface($container->get('Database.Master'));
+        $container->set('UserDatabaseInterface', function () use ($container) {
+            return new UserDatabaseInterface($container->get('Database.Master'));
         });
     }
 }
