@@ -1,12 +1,12 @@
 <?php
 
-namespace EmailCollector\Services\Gmail;
+namespace App\Services\Gmail;
 
-use EmailCollector\Services\EmailCollectionService\EmailCollectionInterface;
+use App\Services\EmailCollectionService\EmailCollectionInterface;
 
 /**
  * Class GmailService
- * @package EmailCollector\Service\Gmail
+ * @package App\Service\Gmail
  *
  * This class is responsible for the interaction with the Gmail Api to fetch all emails
  * the user requests.

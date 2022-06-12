@@ -1,28 +1,23 @@
-version: "3.8"
+version: "3.9"
 services:
-  php:
+  fpm:
     build:
       context: .
-      dockerfile: docker-compose/php/Dockerfile
-    networks:
-      - email_collector
+      dockerfile: docker/fpm/Dockerfile
     volumes:
-      - ./:/var/www/
-    container_name: email-collector-php
+      - "${PWD}:/opt/app"
+    container_name: ${BASE_NAME}-fpm
 
   nginx:
     image: nginx:1.17-alpine
-    container_name: email-collector-nginx
+    container_name: ${BASE_NAME}-nginx
+    image: ${IMAGE_BASE_NAME}-nginx:latest
     restart: unless-stopped
     ports:
-      - 8080:80
-    volumes:
-      - ./:/var/www
-      - ./docker-compose/nginx/:/etc/nginx/conf.d/
-    networks:
-      - email_collector
+      - 80:80
     depends_on:
-      - php
+      - fpm
 
 networks:
-  email_collector:
+  default:
+    name: ${NETWORK}

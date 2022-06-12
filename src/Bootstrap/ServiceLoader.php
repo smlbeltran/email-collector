@@ -1,9 +1,9 @@
 <?php
 
-namespace EmailCollector\Bootstrap;
+namespace App\Bootstrap;
 
-use EmailCollector\Helpers\JsonSchemaValidator;
-use EmailCollector\Services\User\UserDatabaseInterface;
+use App\Helpers\JsonSchemaValidator;
+use App\Services\User\UserDatabaseInterface;
 use Psr\Container\ContainerInterface;
 
 class ServiceLoader

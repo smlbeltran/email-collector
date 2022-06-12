@@ -1,14 +1,14 @@
 <?php
 
-namespace EmailCollector\Bootstrap;
-// use EmailCollector\Middleware\MiddlewareAuth;
+namespace App\Bootstrap;
+// use App\Middleware\MiddlewareAuth;
 use Slim\App;
-use EmailCollector\Middleware\MiddlewareRedirect;
-use EmailCollector\Services\ApiKey;
-use EmailCollector\Services\Authentication;
-use EmailCollector\Services\Health\Health;
-use EmailCollector\Services\EmailCollectionService\EmailCollections;
-use EmailCollector\Services\User\UserService;
+use App\Middleware\MiddlewareRedirect;
+use App\Services\ApiKey;
+use App\Services\Authentication;
+use App\Services\Health\Health;
+use App\Services\EmailCollectionService\EmailCollections;
+use App\Services\User\UserService;
 
 
 

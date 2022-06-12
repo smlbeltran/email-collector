@@ -1,6 +1,6 @@
 <?php
 
-namespace EmailCollector\Services\User;
+namespace App\Services\User;
 
 class UserDatabaseInterface
 {
@@ -17,7 +17,7 @@ class UserDatabaseInterface
 
     public function createUser($payload)
     {
-        /** @var EmailCollector\Bootstrap\ServiceDatabase $pdo */
+        /** @var App\Bootstrap\ServiceDatabase $pdo */
         $pdo = $this->pdo->prepare("INSERT INTO users (first_name, last_name, email, password) 
                     VALUES (:firstName, :lastName, :email, :password)");
 

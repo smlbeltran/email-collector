@@ -1,13 +1,13 @@
 <?php
 
-namespace EmailCollector;
+namespace App;
 
 use DI\Container;
-use EmailCollector\Bootstrap\ConfigurationLoader;
-use EmailCollector\Bootstrap\ServiceDatabase;
-use EmailCollector\Bootstrap\ServiceLogger;
-use EmailCollector\Bootstrap\ServiceRouter;
-use EmailCollector\Bootstrap\ServiceLoader;
+use App\Bootstrap\ConfigurationLoader;
+use App\Bootstrap\ServiceDatabase;
+use App\Bootstrap\ServiceLogger;
+use App\Bootstrap\ServiceRouter;
+use App\Bootstrap\ServiceLoader;
 use Psr\Container\ContainerInterface;
 use Slim\Factory\AppFactory;
 

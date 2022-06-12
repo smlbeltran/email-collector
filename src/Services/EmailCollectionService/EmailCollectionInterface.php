@@ -1,6 +1,6 @@
 <?php
 
-namespace EmailCollector\Services\EmailCollectionService;
+namespace App\Services\EmailCollectionService;
 
 interface EmailCollectionInterface
 {

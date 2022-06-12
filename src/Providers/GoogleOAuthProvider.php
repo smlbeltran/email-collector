@@ -1,6 +1,6 @@
 <?php
 
-namespace EmailCollector\Providers;
+namespace App\Providers;
 
 use League\OAuth2\Client\Grant\RefreshToken;
 use League\OAuth2\Client\Provider\Google;
@@ -10,7 +10,7 @@ use GuzzleHttp\Psr7\Response;
 
 /**
  * Class GoogleOAuthProvider
- * @package EmailCollector\Providers
+ * @package App\Providers
  */
 class GoogleOAuthProvider implements OAuthConnectInterface
 {

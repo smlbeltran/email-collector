@@ -1,6 +1,6 @@
 <?php
 
-namespace EmailCollector\Services\User;
+namespace App\Services\User;
 
 use Firebase\JWT\JWT;
 use Psr\Http\Message\ResponseInterface as Response;
@@ -17,7 +17,7 @@ class ApiKey extends BaseController
         $config = $this->container->get('Config');
 
         $secretKey = base64_encode($config['apikey']);
-        /** @var \EmailCollector\Services\User\UserDatabaseInterface $user */
+        /** @var \App\Services\User\UserDatabaseInterface $user */
         $user = $this->container->get('UserDatabaseInterface');
         $user = $user->getOne($payload);
 

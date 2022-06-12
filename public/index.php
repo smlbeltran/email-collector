@@ -1,6 +1,6 @@
 <?php
 
-use EmailCollector\ApplicationFactory;
+use App\ApplicationFactory;
 
 require __DIR__ . '/../vendor/autoload.php';
 

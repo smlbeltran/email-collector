@@ -1,8 +1,8 @@
 <?php
 
-namespace EmailCollector\Services\Health;
+namespace App\Services\Health;
 
-use EmailCollector\Services\BaseController;
+use App\Services\BaseController;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Response;
 

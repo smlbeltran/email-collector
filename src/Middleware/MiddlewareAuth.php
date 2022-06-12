@@ -1,6 +1,6 @@
 <?php
 
-namespace EmailCollector\Middleware;
+namespace App\Middleware;
 
 use Firebase\JWT\JWT;
 use Noodlehaus\Config;
@@ -10,7 +10,7 @@ use Psr\Http\Server\RequestHandlerInterface as RequestHandler;
 
 /**
  * Class MiddlewareAuth
- * @package EmailCollector\Middleware
+ * @package App\Middleware
  * Authenticates the user before making any further request to the application
  */
 class MiddlewareAuth

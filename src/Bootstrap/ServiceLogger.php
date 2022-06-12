@@ -1,7 +1,7 @@
 <?php
 
 
-namespace EmailCollector\Bootstrap;
+namespace App\Bootstrap;
 
 // use Monolog\Logger;
 // use Monolog\Formatter\LineFormatter;

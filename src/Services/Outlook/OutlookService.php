@@ -1,15 +1,15 @@
 <?php
 
-namespace EmailCollector\Services\Outlook;
+namespace App\Services\Outlook;
 
-use EmailCollector\Service\Outlook\Outlook;
-use EmailCollector\Services\EmailCollectionService\EmailCollectionInterface;
+use App\Service\Outlook\Outlook;
+use App\Services\EmailCollectionService\EmailCollectionInterface;
 use Microsoft\Graph\Graph;
 use Microsoft\Graph\Model;
 
 /**
  * Class OutlookService
- * @package EmailCollector\Services\Outlook
+ * @package App\Services\Outlook
  * This class is responsible for the interaction with the Outlook Api (Microsoft Graph) to fetch all emails
  * the user requests.
  */

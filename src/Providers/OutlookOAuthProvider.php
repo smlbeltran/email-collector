@@ -1,7 +1,7 @@
 <?php
 
 
-namespace EmailCollector\Providers;
+namespace App\Providers;
 
 use GuzzleHttp\Psr7\Response;
 use League\OAuth2\Client\Grant\RefreshToken;
@@ -10,7 +10,7 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 
 /**
  * Class OutlookOAuthProvider
- * @package EmailCollector\Providers
+ * @package App\Providers
  */
 class OutlookOAuthProvider implements OAuthConnectInterface
 {

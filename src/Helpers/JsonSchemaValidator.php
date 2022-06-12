@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace EmailCollector\Helpers;
+namespace App\Helpers;
 
 use JsonSchema\Constraints\Constraint;
 use JsonSchema\Validator;

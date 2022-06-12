@@ -1,6 +1,6 @@
 <?php
 
-namespace EmailCollector\Services;
+namespace App\Services;
 
 use GuzzleHttp\Psr7\Response;
 use Psr\Container\ContainerInterface;

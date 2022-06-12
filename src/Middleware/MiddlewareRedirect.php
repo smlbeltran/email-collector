@@ -1,9 +1,9 @@
 <?php
 
-namespace EmailCollector\Middleware;
+namespace App\Middleware;
 
-use EmailCollector\Providers\GoogleOAuthProvider;
-use EmailCollector\Providers\OutlookOAuthProvider;
+use App\Providers\GoogleOAuthProvider;
+use App\Providers\OutlookOAuthProvider;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ClientException;
 use Noodlehaus\Config;

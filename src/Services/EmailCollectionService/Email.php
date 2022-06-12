@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace EmailCollector\Services\EmailCollectionService;
+namespace App\Services\EmailCollectionService;
 
 
 class Email

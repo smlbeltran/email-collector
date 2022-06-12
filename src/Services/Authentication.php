@@ -1,10 +1,10 @@
 <?php
 
 
-namespace EmailCollector\Services;
+namespace App\Services;
 
-use EmailCollector\Providers\GoogleOAuthProvider;
-use EmailCollector\Providers\OutlookOAuthProvider;
+use App\Providers\GoogleOAuthProvider;
+use App\Providers\OutlookOAuthProvider;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 
