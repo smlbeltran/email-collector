@@ -15,7 +15,7 @@
     "ramsey/uuid": "^4.0",
     "firebase/php-jwt": "^5.2",
     "hassankhan/config": "^2.1",
-    "symfony/var-dumper": "^5.0",
+    "symfony/var-dumper": "^5.4||^6.4||^7.0",
     "ext-pdo": "*",
     "microsoft/microsoft-graph": "^1.13",
     "league/oauth2-client": "^2.4",
